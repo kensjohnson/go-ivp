@@ -3,6 +3,7 @@ for go code
 add additional info
 
 **notes - most recent on top**
+cleaned up some on web
 
 addeed hello.go, did a build, and worked fine
 
