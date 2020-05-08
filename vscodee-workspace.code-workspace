@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": "../src/hello"
+		},
+		{
+			"name": "go-code",
+			"path": "."
+		}
+	],
+	"settings": {}
+}
