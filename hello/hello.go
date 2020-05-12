@@ -10,7 +10,6 @@ func main() {
 	fakeDefects[2] = "i need to be fixed"
 	fakeDefects[3] = "i need to be fixed"
 	fakeDefects[4] = "i need to be fixed"
-
 	fmt.Println("Entering program")
 
 	fmt.Printf("hello, kens crazy world\n")
