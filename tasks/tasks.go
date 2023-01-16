@@ -1,23 +1,39 @@
 package main
 
-import "fmt"
+import (
+	"encoding/csv"
+	"fmt"
+	"io"
+	"log"
+	"os"
+)
 
 func main() {
-	//a table of fake defects so I can play with branches etc
-	var fakeDefects [5]string
-	fakeDefects[0] = "i need to be fixed"
-	fakeDefects[1] = "i need to be fixed"
-	fakeDefects[2] = "i need to be fixed"
-	fakeDefects[3] = "i need to be fixed"
-	fakeDefects[4] = "i need to be fixed"
+
 	fmt.Println("Entering program")
 
-	//dump the defects
-	fmt.Println("defect table")
-	for index, element := range fakeDefects {
-		fmt.Println("Defect:", index, "=>", element)
+	// open file
+	f, err := os.Open("data/gtasks_today_dump.csv")
+	if err != nil {
+		log.Fatal(err)
 	}
-	fmt.Println("<<<< ======== >>>>")
+
+	// remember to close the file at the end of the program
+	defer f.Close()
+
+	// read csv values using csv.Reader
+	csvReader := csv.NewReader(f)
+	for {
+		rec, err := csvReader.Read()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+		// do something with read line
+		fmt.Printf("%+v\n", rec)
+	}
 
 	fmt.Println("end of program")
 
