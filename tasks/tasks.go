@@ -71,9 +71,14 @@ func main() {
 		fmt.Println((t))
 		taskList[t.taskID] = &t
 	}
-	fmt.Println(taskList)
+	// dump map
+	// fmt.Println(taskList)
 
 	//walk list and display titles just to work out dererencing
+
+	for k, v := range taskList {
+		fmt.Println(k, v.taskTitle)
+	}
 
 	fmt.Println("end of program")
 
