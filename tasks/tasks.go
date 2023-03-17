@@ -21,6 +21,8 @@ func main() {
 		taskTitle    string
 	}
 
+	taskList := make(map[string]*task)
+
 	// open file
 	f, err := os.Open("data/gtasks_today_dump.csv")
 	if err != nil {
@@ -58,6 +60,7 @@ func main() {
 		// t := (strings.Split(rec[2], ",")[3])    //field 3 is the task description
 		// fmt.Println(s)
 		// fmt.Println((t))
+		//TODO strip leading and trailing quotes from everything
 		t := task{
 			taskLineNo:   lineCount,
 			taskParent:   (strings.Split(rec[2], ",")[0]),
@@ -66,7 +69,11 @@ func main() {
 			taskTitle:    (strings.Split(rec[2], ",")[3]),
 		}
 		fmt.Println((t))
+		taskList[t.taskID] = &t
 	}
+	fmt.Println(taskList)
+
+	//walk list and display titles just to work out dererencing
 
 	fmt.Println("end of program")
 
