@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"sort"
 	"strings"
 )
 
@@ -46,6 +47,13 @@ func main() {
 		// increment line counter
 		lineCount++
 
+		//skip the csv header line (line 1)
+		//TODO: should probably do a bit of sanity checking to make sure there is a header row
+		if lineCount == 1 {
+			fmt.Println("skipping header row==>", rec)
+			continue
+		}
+
 		// print the entire line
 		//fmt.Printf("%+v\n", rec)
 
@@ -71,14 +79,47 @@ func main() {
 		fmt.Println((t))
 		taskList[t.taskID] = &t
 	}
+
+	// print counts for comparison - since 1st line is headers they are off by 1
+	fmt.Printf("CSV Lines read: %d  taskList Length: %d \n ", lineCount, len(taskList))
+
 	// dump map
 	// fmt.Println(taskList)
 
-	//walk list and display titles just to work out dererencing
+	//sortList is used to sort the keys for a subset of tasks to order them  by taskPosition
+	sortlist := make([]task, len(taskList))
 
-	for k, v := range taskList {
-		fmt.Println(k, v.taskTitle)
+	//walk taskList and identify top level tasks(parent = null). add taskPositon and taskID to map and taskPosition to slice
+	//for subsequent sorting. this assumes that the positions are unique (ie 2 tasks cant have the same position in the list)
+	//note only need values since the value also contains the taskID
+	for _, v := range taskList {
+		if v.taskParent == "null" {
+			//fmt.Println(k, v.taskParent, v.taskTitle)
+			//manually deref files from task pointer in master list to a new task for the slice
+			//TODO: decide whether taskList should be a pointer or a instance since this is gettin crazy
+			t := task{
+				taskLineNo:   v.taskLineNo,
+				taskParent:   v.taskParent,
+				taskPosition: v.taskPosition,
+				taskID:       v.taskID,
+				taskTitle:    v.taskTitle,
+			}
+			sortlist = append(sortlist, t)
+
+		}
 	}
+
+	//sort the slice by taskposition
+	sort.SliceStable(sortlist, func(i, j int) bool {
+		return sortlist[i].taskPosition < sortlist[j].taskPosition
+	})
+
+	fmt.Println("Sorted slice")
+	for _, u := range sortlist {
+		fmt.Printf("SEQ: %s Title: %s \n", u.taskPosition, u.taskTitle)
+	}
+
+	//sort the slice to get in order by taskPosition
 
 	fmt.Println("end of program")
 
