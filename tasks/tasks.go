@@ -87,7 +87,7 @@ func main() {
 	// fmt.Println(taskList)
 
 	//sortList is used to sort the keys for a subset of tasks to order them  by taskPosition
-	sortlist := make([]task, len(taskList))
+	var sortlist []task
 
 	//walk taskList and identify top level tasks(parent = null). add taskPositon and taskID to map and taskPosition to slice
 	//for subsequent sorting. this assumes that the positions are unique (ie 2 tasks cant have the same position in the list)
@@ -115,8 +115,10 @@ func main() {
 	})
 
 	fmt.Println("Sorted slice")
+	z := 0
 	for _, u := range sortlist {
-		fmt.Printf("SEQ: %s Title: %s \n", u.taskPosition, u.taskTitle)
+		z++
+		fmt.Printf(" ==> %d  SEQ: %s Title: %s \n", z, u.taskPosition, u.taskTitle)
 	}
 
 	//sort the slice to get in order by taskPosition
