@@ -5,7 +5,7 @@ import "fmt"
 func main() {
 	//a table of fake defects so I can play with branches etc
 	var fakeDefects [5]string
-	fakeDefects[0] = "i need to be fixed"
+	fakeDefects[0] = "i need to be refixed"
 	fakeDefects[1] = "i need to be fixed"
 	fakeDefects[2] = "i need to be fixed"
 	fakeDefects[3] = "i need to be fixed"
